@@ -46,6 +46,12 @@ before_2020 <- city_day_agg_cleaned %>% filter(year(date)<2020 & month(date)<6)
 after_2020 <- city_day_agg_cleaned %>% filter(year(date)>=2020 & month(date)<6)
 
 
-before_2020 %>% group_by(city_id, parameter) %>% summarize(agg_mean = mean(mean) )
+before_2020 %>% 
+  group_by(city_id, parameter) %>% 
+  summarize(agg_mean = mean(mean))
+
+after_2020 %>% 
+  group_by(city_id, parameter) %>% 
+  summarize(agg_mean = mean(mean))
 
 ```
