@@ -45,4 +45,7 @@ Ideas so far (Elvis): Since the map plot requires an x and y in terms of latitud
 before_2020 <- city_day_agg_cleaned %>% filter(year(date)<2020 & month(date)<6)
 after_2020 <- city_day_agg_cleaned %>% filter(year(date)>=2020 & month(date)<6)
 
+
+before_2020 %>% group_by(city_id, parameter) %>% summarize(agg_mean = mean(mean) )
+
 ```
