@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Load Data
 
-```{r cars}
+```{r load-data}
 city_day_agg_cleaned <- read_csv(gzfile('city_day_agg_cleaned.csv.gz'))
 country_day_agg_cleaned <- read_csv(gzfile('country_day_agg_cleaned.csv.gz'))
 ```
