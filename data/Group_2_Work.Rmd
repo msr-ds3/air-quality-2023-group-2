@@ -51,25 +51,25 @@ after_2020 <- city_day_agg_cleaned %>%
 
 before_2020 <- before_2020 %>%
   group_by(city_id, parameter) %>%
-  summarize(agg_mean = mean(mean), med = median(mean)) %>%
+  summarize(agg_mean = mean(mean)) %>%
   mutate(before_2020 = TRUE)
 
 after_2020 <- after_2020 %>%
   group_by(city_id, parameter) %>%
-  summarize(agg_mean = mean(mean), med = median(mean)) %>%
+  summarize(agg_mean = mean(mean)) %>%
   mutate(before_2020 = FALSE)
 
 df <- bind_rows(before_2020, after_2020)
 
 ggplot(df, aes(x = agg_mean, fill = before_2020)) +
-  geom_density(color = "black", alpha = 0.5) +
+  geom_density(alpha = 0.5) +
+  geom_vline(aes(xintercept = median(agg_mean))) +
   labs(title = "Distribution of Air Pollution",
        x = "Parameter",
        y = "Density") +
   facet_wrap(~ parameter, scales = "free") +
-  scale_fill_manual(values = c("lightblue", "lightgreen"),
-                    labels = c("Before 2020", "After 2020"),
+  scale_fill_manual(values = c("red", "blue"),
+                    labels = c("2020", "3-yr avg"),
                     guide = guide_legend(title = "Period"))
-
 
 ```
