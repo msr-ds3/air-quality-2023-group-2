@@ -45,15 +45,22 @@ Ideas so far (Elvis): Since the map plot requires an x and y in terms of latitud
 before_2020 <- city_day_agg_cleaned %>% filter(year(date)<2020 & month(date)<6)
 after_2020 <- city_day_agg_cleaned %>% filter(year(date)>=2020 & month(date)<6)
 
-
 before_2020 <- before_2020 %>% 
   group_by(city_id, parameter) %>% 
-  summarize(agg_mean = mean(mean))
+  summarize(agg_mean = mean(mean)) %>% 
+  mutate(before_2020 = TRUE)
 
 after_2020 <- after_2020 %>% 
   group_by(city_id, parameter) %>% 
-  summarize(agg_mean = mean(mean))
+  summarize(agg_mean = mean(mean)) %>% 
+  mutate(before_2020 = FALSE)
 
 df <- bind_rows(before_2020, after_2020)
+
+ggplot(df, aes(x = agg_mean)) +
+  geom_density(color = "black", fill = "lightblue") +
+  labs(title = "Distribution of Air Pollution",
+       x = "Parameter",
+       y = "Density")
 
 ```
