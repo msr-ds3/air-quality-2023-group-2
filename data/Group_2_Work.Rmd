@@ -63,7 +63,8 @@ df <- bind_rows(before_2020, after_2020)
 
 ggplot(df, aes(x = agg_mean, fill = before_2020)) +
   geom_density(alpha = 0.5) +
-  geom_vline(aes(xintercept = median(agg_mean))) +
+  geom_vline(data = before_2020, aes(xintercept = median(mean)), color = "blue", size = 1) +
+  geom_vline(data = after_2020, aes(xintercept = median(mean)), color = "red", size = 1) +
   labs(title = "Distribution of Air Pollution",
        x = "Parameter",
        y = "Density") +
