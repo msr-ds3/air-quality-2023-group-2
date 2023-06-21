@@ -22,6 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 city_day_agg_cleaned <- read_csv(gzfile('city_day_agg_cleaned.csv.gz'))
 country_day_agg_cleaned <- read_csv(gzfile('country_day_agg_cleaned.csv.gz'))
 ```
+
 ## Map
 
 ```{r map}
@@ -33,10 +34,15 @@ ggplot() +
                fill = "lightgray", color = "white")
 ```
 
+## Density
+
 Ideas so far (Elvis): Since the map plot requires an x and y in terms of latitude and longitude, and the city dataframe only contains the city's "id", then it seems like a challenge to tie city 821 (for instance), to an actual place on the map (maybe look up how the paper assigned thier ids to the cities, that might tell us which city is which and what their cordiants are). Because of this challenge, I think it will be easier to focus on manpulating the data so we can get a column that contains the percentage change for certain chemicals between (2017-2019) vs 2020 (for months January to May)
 
 ```{r Getting change in chemical (2017-2018-2019) vs 2020 (by month)}
 
 #divide city dataframe into two, 2017-2019 and 2020 so you can get the averages for each month and compare them to get the change in the chemical
+
+before_2020 <- city_day_agg_cleaned %>% filter(year(date)<2020 & month(date)<6)
+after_2020 <- city_day_agg_cleaned %>% filter(year(date)>=2020 & month(date)<6)
 
 ```
