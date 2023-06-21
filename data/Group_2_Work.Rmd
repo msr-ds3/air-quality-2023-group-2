@@ -7,6 +7,7 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 library(here)
+library(ggplot2)
 library(scales)
 library(tidyverse)
 library(modelr)
@@ -42,26 +43,33 @@ Ideas so far (Elvis): Since the map plot requires an x and y in terms of latitud
 
 #divide city dataframe into two, 2017-2019 and 2020 so you can get the averages for each month and compare them to get the change in the chemical
 
-before_2020 <- city_day_agg_cleaned %>% filter(year(date)<2020 & month(date)<6)
-after_2020 <- city_day_agg_cleaned %>% filter(year(date)>=2020 & month(date)<6)
+before_2020 <- city_day_agg_cleaned %>%
+  filter(year(date) < 2020 & month(date) < 6)
 
-before_2020 <- before_2020 %>% 
-  group_by(city_id, parameter) %>% 
-  summarize(agg_mean = mean(mean)) %>% 
+after_2020 <- city_day_agg_cleaned %>%
+  filter(year(date) >= 2020 & month(date) < 6)
+
+before_2020 <- before_2020 %>%
+  group_by(city_id, parameter) %>%
+  summarize(agg_mean = mean(mean), med = median(mean)) %>%
   mutate(before_2020 = TRUE)
 
-after_2020 <- after_2020 %>% 
-  group_by(city_id, parameter) %>% 
-  summarize(agg_mean = mean(mean)) %>% 
+after_2020 <- after_2020 %>%
+  group_by(city_id, parameter) %>%
+  summarize(agg_mean = mean(mean), med = median(mean)) %>%
   mutate(before_2020 = FALSE)
 
 df <- bind_rows(before_2020, after_2020)
 
-ggplot(df, aes(x = agg_mean)) +
-  geom_density(color = "black", fill = "lightblue") +
+ggplot(df, aes(x = agg_mean, fill = before_2020)) +
+  geom_density(color = "black", alpha = 0.5) +
   labs(title = "Distribution of Air Pollution",
        x = "Parameter",
        y = "Density") +
-  facet_wrap(~ parameter, scales = "free")
+  facet_wrap(~ parameter, scales = "free") +
+  scale_fill_manual(values = c("lightblue", "lightgreen"),
+                    labels = c("Before 2020", "After 2020"),
+                    guide = guide_legend(title = "Period"))
+
 
 ```
