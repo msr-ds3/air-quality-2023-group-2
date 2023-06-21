@@ -61,6 +61,7 @@ ggplot(df, aes(x = agg_mean)) +
   geom_density(color = "black", fill = "lightblue") +
   labs(title = "Distribution of Air Pollution",
        x = "Parameter",
-       y = "Density")
+       y = "Density") +
+  facet_wrap(~ parameter, scales = "free")
 
 ```
