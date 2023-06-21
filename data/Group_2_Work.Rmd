@@ -22,4 +22,13 @@ knitr::opts_chunk$set(echo = TRUE)
 city_day_agg_cleaned <- read_csv(gzfile('city_day_agg_cleaned.csv.gz'))
 country_day_agg_cleaned <- read_csv(gzfile('country_day_agg_cleaned.csv.gz'))
 ```
+## Map
 
+```{r map}
+world_map <- map_data("world")
+
+ggplot() +
+  geom_polygon(data = world_map,
+               aes(x = long, y = lat, group = group),
+               fill = "lightgray", color = "white")
+```
