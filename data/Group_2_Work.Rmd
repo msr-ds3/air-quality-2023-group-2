@@ -95,5 +95,14 @@ col_to_remove <- c('med')
 
 df_rel_change <- df %>% select(- one_of(col_to_remove)) %>%  pivot_wider(names_from = before_2020, values_from = agg_mean) %>% na.omit()
 
+#These two lines change the column name from TRUE and FALSE so we can actually use them in a mutate
+colnames(df_rel_change)[6] = "before_2020"
+
+colnames(df_rel_change)[7] = "after_2020"
+
+df_rel_change <- df_rel_change 
+
+
+
 
 ```
