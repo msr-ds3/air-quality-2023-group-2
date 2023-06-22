@@ -22,6 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r load-data}
 city_day_agg_cleaned <- read_csv(gzfile('city_day_agg_cleaned.csv.gz'))
 country_day_agg_cleaned <- read_csv(gzfile('country_day_agg_cleaned.csv.gz'))
+openaq_cities <- read_csv('openaq_cities.csv')
 ```
 
 ## Map
