@@ -92,5 +92,5 @@ ggplot() +
 ```
 ## Relative Change
 ```{r rel-change}
-
+df <- pivot_wider(df, names_from = before_2020, values_from = agg_mean)
 ```
