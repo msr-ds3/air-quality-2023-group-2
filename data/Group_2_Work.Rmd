@@ -25,17 +25,6 @@ country_day_agg_cleaned <- read_csv(gzfile('country_day_agg_cleaned.csv.gz'))
 openaq_cities <- read_csv('openaq_cities.csv')
 ```
 
-## Map
-
-```{r map}
-world_map <- map_data("world")
-
-ggplot() +
-  geom_polygon(data = world_map,
-               aes(x = long, y = lat, group = group),
-               fill = "lightgray", color = "white")
-```
-
 ## Density
 
 Ideas so far (Elvis): Since the map plot requires an x and y in terms of latitude and longitude, and the city dataframe only contains the city's "id", then it seems like a challenge to tie city 821 (for instance), to an actual place on the map (maybe look up how the paper assigned thier ids to the cities, that might tell us which city is which and what their cordiants are). Because of this challenge, I think it will be easier to focus on manpulating the data so we can get a column that contains the percentage change for certain chemicals between (2017-2019) vs 2020 (for months January to May)
@@ -70,8 +59,8 @@ df <- bind_rows(before_2020, after_2020)
 
 ggplot(df, aes(x = agg_mean, fill = before_2020)) +
   geom_density(alpha = 0.5) +
-  geom_vline(data = subset(df, !before_2020), aes(xintercept = median(agg_mean)), color = "red", size = 1) +
-  geom_vline(data = subset(df, before_2020), aes(xintercept = median(agg_mean)), color = "blue", size = 1) +
+  geom_vline(data = subset(df, !before_2020), aes(xintercept = med), color = "red", size = 1) +
+  geom_vline(data = subset(df, before_2020), aes(xintercept = med), color = "blue", size = 1) +
   labs(
     title = "Distribution of Air Pollution",
     x = "Parameter",
@@ -82,8 +71,28 @@ ggplot(df, aes(x = agg_mean, fill = before_2020)) +
                     labels = c("2020", "3-yr avg"),
                     guide = guide_legend(title = "Period"))
 
-median(agg_mean$)
-
-
-
 ```
+## Map
+
+```{r map}
+# Get the world map data
+world_map <- map_data("world")
+
+# Join the data frames
+df <- left_join(df, openaq_cities, by = "city_id")
+
+# Plot the world map with agg_mean points
+ggplot() +
+  geom_polygon(data = world_map,
+               aes(x = long, y = lat, group = group),
+               fill = "lightgray", color = "white") +
+  geom_point(data = df,
+             aes(x = Lon, y = Lat, color = agg_mean),
+             size = 3, alpha = 0.7) +
+  scale_color_gradient(low = "blue", high = "red") +
+  labs(title = "Air Pollution by City",
+       x = "Longitude",
+       y = "Latitude",
+       color = "Agg Mean")
+```
+
