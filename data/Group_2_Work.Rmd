@@ -114,7 +114,7 @@ ggplot() +
   labs(title = "Air Pollution by City",
        x = "Longitude",
        y = "Latitude",
-       color = "Agg Mean") +
+       color = "Percent Change") +
   facet_wrap(~ parameter, scales = "free")
 
 ```
