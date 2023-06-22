@@ -79,7 +79,7 @@ ggplot() +
                fill = "lightgray", color = "white") +
   geom_point(data = df,
              aes(x = Lon, y = Lat, color = agg_mean),
-             size = 3, alpha = 0.7) +
+             size = 0.1, alpha = 0.7) +
   scale_color_gradient(low = "blue", high = "red") +
   labs(title = "Air Pollution by City",
        x = "Longitude",
