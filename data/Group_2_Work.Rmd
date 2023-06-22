@@ -64,6 +64,7 @@ ggplot(df, aes(x = agg_mean, fill = before_2020)) +
                     labels = c("2020", "3-yr avg"),
                     guide = guide_legend(title = "Period"))
 ```
+
 ## Map
 ```{r map}
 # Get the world map data
@@ -90,6 +91,7 @@ ggplot() +
                     labels = c("2020", "3-yr avg"),
                     guide = guide_legend(title = "Period"))
 ```
+
 ## Relative Change
 ```{r rel-change}
 col_to_remove <- c('med')
