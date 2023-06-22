@@ -92,7 +92,9 @@ ggplot() +
 ```
 ## Relative Change
 ```{r rel-change}
-df_rel_change <- pivot_wider(df, names_from = before_2020, values_from = agg_mean)
+col_to_remove <- c('med')
+
+df_rel_change <- df %>% select(- one_of(col_to_remove)) %>%  pivot_wider(names_from = before_2020, values_from = agg_mean)
 
 
 ```
