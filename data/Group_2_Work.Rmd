@@ -118,15 +118,31 @@ ggplot() +
   facet_wrap(~ parameter, scales = "free")
 
 
-ggplot() +
-  geom_point(data = df_rel_change,
-             aes(x = countryCode, y = percent_change),
-             size = 0.1, alpha = 0.7) +
-  scale_color_gradient(low = "purple", high = "orange") +
-  labs(title = "Air Pollution by Country",
-       x = "Longitude",
-       y = "Latitude",
-       color = "Percent Change") +
-  facet_wrap(~ parameter, scales = "free")
+# Filter the data for each parameter category
+df_rel_change_by_country <- df_rel_change %>%
+  group_by(countryCode, parameter) %>% 
+  summarize(percent_change = mean(percent_change))
+
+df_no2 <- df_rel_change_by_country[df_rel_change_by_country$parameter == "no2", ]
+df_o3 <- df_rel_change_by_country[df_rel_change_by_country$parameter == "o3", ]
+df_pm25 <- df_rel_change_by_country[df_rel_change_by_country$parameter == "pm25", ]
+
+ggplot(data = df_no2, aes(y = countryCode, x = percent_change)) +
+  geom_point() +
+  labs(title = "Air Pollution by Country - no2",
+       y = "Country",
+       x = "Percent Change")
+
+ggplot(data = df_o3, aes(y = countryCode, x = percent_change)) +
+  geom_point() +
+  labs(title = "Air Pollution by Country - o3",
+       y = "Country",
+       x = "Percent Change")
+
+ggplot(data = df_pm25, aes(y = countryCode, x = percent_change)) +
+  geom_point() +
+  labs(title = "Air Pollution by Country - pm25",
+       y = "Country",
+       x = "Percent Change")
 
 ```
