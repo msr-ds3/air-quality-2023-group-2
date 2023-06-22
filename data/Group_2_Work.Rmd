@@ -23,7 +23,7 @@ openaq_cities <- read_csv('openaq_cities.csv')
 ```
 
 ## Density
-```{r Getting change in chemical (2017-2018-2019) vs 2020 (by month)}
+```{r density}
 #divide city dataframe into two, 2017-2019 and 2020 so you can get the averages for each month and compare them to get the change in the chemical      
 
 before_2020 <- city_day_agg_cleaned %>%
@@ -89,4 +89,8 @@ ggplot() +
   scale_fill_manual(values = c("red", "blue"),
                     labels = c("2020", "3-yr avg"),
                     guide = guide_legend(title = "Period"))
+```
+## Relative Change
+```{r rel-change}
+
 ```
