@@ -65,7 +65,7 @@ ggplot(df, aes(x = agg_mean, fill = before_2020)) +
                     guide = guide_legend(title = "Period"))
 ```
 
-## Map
+## Aggregate Mean Map
 ```{r map}
 # Get the world map data
 world_map <- map_data("world")
@@ -89,7 +89,7 @@ ggplot() +
   facet_wrap(~ parameter, scales = "free")
 ```
 
-## Relative Change
+## Relative Change Map
 ```{r rel-change}
 col_to_remove <- c('med')
 
@@ -116,33 +116,43 @@ ggplot() +
        y = "Latitude",
        color = "Percent Change") +
   facet_wrap(~ parameter, scales = "free")
+```
 
-
-# Filter the data for each parameter category
+## Relative Change by Country
+```{r rel-change-by-country}
+# Filter the data for each parameter category and calculate mean and standard error
 df_rel_change_by_country <- df_rel_change %>%
   group_by(countryCode, parameter) %>% 
-  summarize(percent_change = mean(percent_change))
+  summarize(mean_change = mean(percent_change),
+            se = sd(percent_change) / sqrt(n()))
 
 df_no2 <- df_rel_change_by_country[df_rel_change_by_country$parameter == "no2", ]
 df_o3 <- df_rel_change_by_country[df_rel_change_by_country$parameter == "o3", ]
 df_pm25 <- df_rel_change_by_country[df_rel_change_by_country$parameter == "pm25", ]
 
-ggplot(data = df_no2, aes(y = countryCode, x = percent_change)) +
+# Plot for no2 with standard error bars
+ggplot(data = df_no2, aes(y = countryCode, x = mean_change)) +
   geom_point() +
+  geom_errorbarh(aes(xmin = mean_change - se, xmax = mean_change + se), height = 0.2) +
   labs(title = "Air Pollution by Country - no2",
        y = "Country",
        x = "Percent Change")
 
-ggplot(data = df_o3, aes(y = countryCode, x = percent_change)) +
+# Plot for o3 with standard error bars
+ggplot(data = df_o3, aes(y = countryCode, x = mean_change)) +
   geom_point() +
+  geom_errorbarh(aes(xmin = mean_change - se, xmax = mean_change + se), height = 0.2) +
   labs(title = "Air Pollution by Country - o3",
        y = "Country",
        x = "Percent Change")
 
-ggplot(data = df_pm25, aes(y = countryCode, x = percent_change)) +
+# Plot for pm25 with standard error bars
+ggplot(data = df_pm25, aes(y = countryCode, x = mean_change)) +
   geom_point() +
+  geom_errorbarh(aes(xmin = mean_change - se, xmax = mean_change + se), height = 0.2) +
   labs(title = "Air Pollution by Country - pm25",
        y = "Country",
        x = "Percent Change")
+
 
 ```
