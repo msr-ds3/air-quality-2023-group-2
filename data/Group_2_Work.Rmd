@@ -159,6 +159,4 @@ ggplot(data = df_pm25, aes(y = countryCode, x = mean_change, color = mean_change
   labs(title = "Air Pollution by Country - pm25",
        y = "Country",
        x = "Percent Change")
-
-
 ```
