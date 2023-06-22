@@ -42,7 +42,7 @@ Ideas so far (Elvis): Since the map plot requires an x and y in terms of latitud
 
 ```{r Getting change in chemical (2017-2018-2019) vs 2020 (by month)}
 
-#divide city dataframe into two, 2017-2019 and 2020 so you can get the averages for each month and compare them to get the change in the chemical
+#divide city dataframe into two, 2017-2019 and 2020 so you can get the averages for each month and compare them to get the change in the chemical      
 
 before_2020 <- city_day_agg_cleaned %>%
   filter(year(date) < 2020 & month(date) < 6)
@@ -53,12 +53,18 @@ after_2020 <- city_day_agg_cleaned %>%
 before_2020 <- before_2020 %>%
   group_by(city_id, parameter) %>%
   summarize(agg_mean = mean(mean)) %>%
-  mutate(before_2020 = TRUE)
+  mutate(before_2020 = TRUE) %>% 
+  ungroup %>% 
+  group_by(parameter) %>% 
+  mutate(med = median(agg_mean))
 
 after_2020 <- after_2020 %>%
   group_by(city_id, parameter) %>%
   summarize(agg_mean = mean(mean)) %>%
-  mutate(before_2020 = FALSE)
+  mutate(before_2020 = FALSE) %>% 
+  ungroup %>% 
+  group_by(parameter) %>% 
+  mutate(med = median(agg_mean))
 
 df <- bind_rows(before_2020, after_2020)
 
@@ -75,6 +81,8 @@ ggplot(df, aes(x = agg_mean, fill = before_2020)) +
   scale_fill_manual(values = c("red", "blue"),
                     labels = c("2020", "3-yr avg"),
                     guide = guide_legend(title = "Period"))
+
+median(agg_mean$)
 
 
 
