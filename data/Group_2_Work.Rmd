@@ -102,7 +102,19 @@ colnames(df_rel_change)[7] = "after_2020"
 
 df_rel_change <- df_rel_change %>% mutate(percent_change = (((before_2020 - after_2020)/before_2020))*100)
 
-
-
+# Plot the world map with percent_change points
+ggplot() +
+  geom_polygon(data = world_map,
+               aes(x = long, y = lat, group = group),
+               fill = "lightgray", color = "white") +
+  geom_point(data = df_rel_change,
+             aes(x = Lon, y = Lat, color = percent_change),
+             size = 0.1, alpha = 0.7) +
+  scale_color_gradient(low = "purple", high = "orange") +
+  labs(title = "Air Pollution by City",
+       x = "Longitude",
+       y = "Latitude",
+       color = "Agg Mean") +
+  facet_wrap(~ parameter, scales = "free")
 
 ```
