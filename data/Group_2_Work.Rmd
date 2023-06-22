@@ -117,4 +117,16 @@ ggplot() +
        color = "Percent Change") +
   facet_wrap(~ parameter, scales = "free")
 
+
+ggplot() +
+  geom_point(data = df_rel_change,
+             aes(x = countryCode, y = percent_change),
+             size = 0.1, alpha = 0.7) +
+  scale_color_gradient(low = "purple", high = "orange") +
+  labs(title = "Air Pollution by City",
+       x = "Longitude",
+       y = "Latitude",
+       color = "Percent Change") +
+  facet_wrap(~ parameter, scales = "free")
+
 ```
