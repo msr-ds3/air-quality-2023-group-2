@@ -33,7 +33,7 @@ after_2020 <- city_day_agg_cleaned %>%
   filter(year(date) >= 2020 & month(date) < 6)
 
 before_2020 <- before_2020 %>%
-  group_by(city_id, parameter) %>%
+  group_by(countryCode, city_id, parameter) %>%
   summarize(agg_mean = mean(mean)) %>%
   mutate(before_2020 = TRUE) %>% 
   ungroup %>% 
@@ -41,7 +41,7 @@ before_2020 <- before_2020 %>%
   mutate(med = median(agg_mean))
 
 after_2020 <- after_2020 %>%
-  group_by(city_id, parameter) %>%
+  group_by(countryCode, city_id, parameter) %>%
   summarize(agg_mean = mean(mean)) %>%
   mutate(before_2020 = FALSE) %>% 
   ungroup %>% 
@@ -70,7 +70,7 @@ ggplot(df, aes(x = agg_mean, fill = before_2020)) +
 world_map <- map_data("world")
 
 # Join the data frames
-df <- left_join(df, openaq_cities, by = "city_id")
+df <- left_join(df, openaq_cities, by = c("countryCode", "city_id"))
 
 # Plot the world map with agg_mean points
 ggplot() +
@@ -93,4 +93,6 @@ ggplot() +
 ## Relative Change
 ```{r rel-change}
 df <- pivot_wider(df, names_from = before_2020, values_from = agg_mean)
+
+
 ```
