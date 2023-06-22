@@ -93,7 +93,7 @@ ggplot() +
 ```{r rel-change}
 col_to_remove <- c('med')
 
-df_rel_change <- df %>% select(- one_of(col_to_remove)) %>%  pivot_wider(names_from = before_2020, values_from = agg_mean)
+df_rel_change <- df %>% select(- one_of(col_to_remove)) %>%  pivot_wider(names_from = before_2020, values_from = agg_mean) %>% na.omit()
 
 
 ```
