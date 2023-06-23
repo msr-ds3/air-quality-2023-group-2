@@ -207,9 +207,11 @@ ggplot(data = df_pm25, aes(y = countryCode, x = mean_change, color = mean_change
 
 What would we do with more time?
 
-  If we had more time, we could include data from all of 2020 and compare that to all months from 2017-2019 and get a better picture on the lockdown's impact on air pollution
+  If we had more time, we could include data from all of 2020 and compare that to all months from 2017-2019 and get a better picture on the lockdown's impact on air pollution.
   
 What question could you figure out with this data?
+
+  Even though the data in this paper might not fully answer this question, we should look towards seeing how lockdowns could have impact pollution levels differently between rural and urban areas.
 
   
 
