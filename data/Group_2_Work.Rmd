@@ -63,6 +63,13 @@ ggplot(df, aes(x = agg_mean, fill = before_2020)) +
   scale_fill_manual(values = c("red", "blue"),
                     labels = c("2020", "3-yr avg"),
                     guide = guide_legend(title = "Period"))
+
+df_no2_pollution <- df[df$parameter == "no2", ]
+df_o3_pollution <- df[df$parameter == "o3", ]
+df_pm25_pollution <- df[df$parameter == "pm25", ]
+
+
+
 ```
 
 ## Aggregate Mean Map
