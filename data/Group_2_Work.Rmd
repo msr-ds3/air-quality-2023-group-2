@@ -111,19 +111,48 @@ df_rel_change <- df_rel_change %>% mutate(percent_change = (((before_2020 - afte
 
 # Plot the world map with percent_change points
 
+df_no2_rel_change <- df_rel_change[df_rel_change$parameter == "no2", ]
+df_o3_rel_change <- df_rel_change[df_rel_change$parameter == "o3", ]
+df_pm25_rel_change <- df_rel_change[df_rel_change$parameter == "pm25", ]
+
 ggplot() +
   geom_polygon(data = world_map,
                aes(x = long, y = lat, group = group),
                fill = "lightgray", color = "white") +
-  geom_point(data = df_rel_change,
+  geom_point(data = df_no2_rel_change,
              aes(x = Lon, y = Lat, color = percent_change),
-             size = 0.1, alpha = 0.7) +
-  scale_color_gradient(low = "purple", high = "orange") +
-  labs(title = "Air Pollution by City",
+             pch = 1) +
+  scale_color_gradient2(low = "purple4", high = "#FFA500") +
+  labs(title = "Air Pollution by City - no2",
        x = "Longitude",
        y = "Latitude",
-       color = "Percent Change") +
-  facet_wrap(~ parameter, scales = "free")
+       color = "Percent Change") 
+
+ggplot() +
+  geom_polygon(data = world_map,
+               aes(x = long, y = lat, group = group),
+               fill = "lightgray", color = "white") +
+  geom_point(data = df_o3_rel_change,
+             aes(x = Lon, y = Lat, color = percent_change),
+             pch = 1) +
+  scale_color_gradient2(low = "purple4", high = "#FFA500") +
+  labs(title = "Air Pollution by City - o3",
+       x = "Longitude",
+       y = "Latitude",
+       color = "Percent Change")
+
+ggplot() +
+  geom_polygon(data = world_map,
+               aes(x = long, y = lat, group = group),
+               fill = "lightgray", color = "white") +
+  geom_point(data = df_pm25_rel_change,
+             aes(x = Lon, y = Lat, color = percent_change),
+             pch = 1) +
+  scale_color_gradient2(low = "purple4", high = "#FFA500") +
+  labs(title = "Air Pollution by City - pm25",
+       x = "Longitude",
+       y = "Latitude",
+       color = "Percent Change")
 ```
 
 
@@ -145,7 +174,7 @@ ggplot(data = df_no2, aes(y = countryCode, x = mean_change, color = mean_change)
   geom_point() +
   geom_vline(xintercept = 0, linetype = "dashed", color = "black") +
   geom_errorbarh(aes(xmin = mean_change - se, xmax = mean_change + se), height = 0.2) +
-  scale_color_gradient(low = "purple", high = "orange") +
+  scale_color_gradient2(low = "purple4", high = "#FFA500") +
   labs(title = "Air Pollution by Country - no2",
        y = "Country",
        x = "Percent Change")
@@ -155,7 +184,7 @@ ggplot(data = df_o3, aes(y = countryCode, x = mean_change, color = mean_change))
   geom_point() +
   geom_vline(xintercept = 0, linetype = "dashed", color = "black") +
   geom_errorbarh(aes(xmin = mean_change - se, xmax = mean_change + se), height = 0.2) +
-  scale_color_gradient(low = "purple", high = "orange") +
+  scale_color_gradient2(low = "purple4", high = "#FFA500") +
   labs(title = "Air Pollution by Country - o3",
        y = "Country",
        x = "Percent Change")
@@ -165,7 +194,7 @@ ggplot(data = df_pm25, aes(y = countryCode, x = mean_change, color = mean_change
   geom_point() +
   geom_vline(xintercept = 0, linetype = "dashed", color = "black") +
   geom_errorbarh(aes(xmin = mean_change - se, xmax = mean_change + se), height = 0.2) +
-  scale_color_gradient2(low = "purple4", high = "orange") +
+  scale_color_gradient2(low = "purple4", high = "#FFA500") +
   labs(title = "Air Pollution by Country - pm25",
        y = "Country",
        x = "Percent Change")
