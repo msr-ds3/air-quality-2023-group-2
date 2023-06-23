@@ -57,14 +57,14 @@ df_list <- split(df, df$parameter)
 plot_list <- lapply(df_list, function(data) {
   ggplot(data, aes(x = agg_mean, fill = before_2020)) +
     geom_density(alpha = 0.5) +
-    geom_vline(data = subset(data, !before_2020), aes(xintercept = med), color = "red", size = 1) +
-    geom_vline(data = subset(data, before_2020), aes(xintercept = med), color = "blue", size = 1) +
+    geom_vline(data = subset(data, !before_2020), aes(xintercept = med), color = "#d73027", size = 1) +
+    geom_vline(data = subset(data, before_2020), aes(xintercept = med), color = "#4575b4", size = 1) +
     labs(
       title = "Distribution of Air Pollution",
       x = "Parameter",
       y = "Density"
     ) +
-    scale_fill_manual(values = c("red", "blue"),
+    scale_fill_manual(values = c("#d73027", "#4575b4"),
                       labels = c("2020", "3-yr avg"),
                       guide = guide_legend(title = "Period"))
 })
@@ -126,7 +126,7 @@ ggplot() +
   geom_point(data = df_no2_rel_change,
              aes(x = Lon, y = Lat, color = percent_change),
              pch = 1) +
-  scale_color_gradient2(low = "purple4", high = "#FFA500") +
+  scale_color_gradient2(low = "#2d004b", high = "#7f3b08") +
   labs(title = "Air Pollution by City - no2",
        x = "Longitude",
        y = "Latitude",
@@ -139,7 +139,7 @@ ggplot() +
   geom_point(data = df_o3_rel_change,
              aes(x = Lon, y = Lat, color = percent_change),
              pch = 1) +
-  scale_color_gradient2(low = "purple4", high = "#FFA500") +
+  scale_color_gradient2(low = "#2d004b", high = "#7f3b08") +
   labs(title = "Air Pollution by City - o3",
        x = "Longitude",
        y = "Latitude",
@@ -152,7 +152,7 @@ ggplot() +
   geom_point(data = df_pm25_rel_change,
              aes(x = Lon, y = Lat, color = percent_change),
              pch = 1) +
-  scale_color_gradient2(low = "purple4", high = "#FFA500") +
+  scale_color_gradient2(low = "#2d004b", high = "#7f3b08") +
   labs(title = "Air Pollution by City - pm25",
        x = "Longitude",
        y = "Latitude",
@@ -178,7 +178,7 @@ ggplot(data = df_no2, aes(y = countryCode, x = mean_change, color = mean_change)
   geom_point() +
   geom_vline(xintercept = 0, linetype = "dashed", color = "black") +
   geom_errorbarh(aes(xmin = mean_change - se, xmax = mean_change + se), height = 0.2) +
-  scale_color_gradient2(low = "purple4", high = "#FFA500") +
+  scale_color_gradient2(low = "#2d004b", high = "#7f3b08") +
   labs(title = "Air Pollution by Country - no2",
        y = "Country",
        x = "Percent Change")
@@ -188,7 +188,7 @@ ggplot(data = df_o3, aes(y = countryCode, x = mean_change, color = mean_change))
   geom_point() +
   geom_vline(xintercept = 0, linetype = "dashed", color = "black") +
   geom_errorbarh(aes(xmin = mean_change - se, xmax = mean_change + se), height = 0.2) +
-  scale_color_gradient2(low = "purple4", high = "#FFA500") +
+  scale_color_gradient2(low = "#2d004b", high = "#7f3b08") +
   labs(title = "Air Pollution by Country - o3",
        y = "Country",
        x = "Percent Change")
@@ -198,7 +198,7 @@ ggplot(data = df_pm25, aes(y = countryCode, x = mean_change, color = mean_change
   geom_point() +
   geom_vline(xintercept = 0, linetype = "dashed", color = "black") +
   geom_errorbarh(aes(xmin = mean_change - se, xmax = mean_change + se), height = 0.2) +
-  scale_color_gradient2(low = "purple4", high = "#FFA500") +
+  scale_color_gradient2(low = "#2d004b", high = "#7f3b08") +
   labs(title = "Air Pollution by Country - pm25",
        y = "Country",
        x = "Percent Change")
