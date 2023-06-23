@@ -203,3 +203,15 @@ ggplot(data = df_pm25, aes(y = countryCode, x = mean_change, color = mean_change
        y = "Country",
        x = "Percent Change")
 ```
+
+
+What would we do with more time?
+
+  If we had more time, we could include data from all of 2020 and compare that to all months from 2017-2019 and get a better picture on the lockdown's impact on air pollution
+  
+What question could you figure out with this data?
+
+  
+
+
+
