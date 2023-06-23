@@ -50,25 +50,29 @@ after_2020 <- after_2020 %>%
 
 df <- bind_rows(before_2020, after_2020)
 
-ggplot(df, aes(x = agg_mean, fill = before_2020)) +
-  geom_density(alpha = 0.5) +
-  geom_vline(data = subset(df, !before_2020), aes(xintercept = med), color = "red", size = 1) +
-  geom_vline(data = subset(df, before_2020), aes(xintercept = med), color = "blue", size = 1) +
-  labs(
-    title = "Distribution of Air Pollution",
-    x = "Parameter",
-    y = "Density"
-  ) +
-  facet_wrap(~ parameter, scales = "free") +
-  scale_fill_manual(values = c("red", "blue"),
-                    labels = c("2020", "3-yr avg"),
-                    guide = guide_legend(title = "Period"))
+# Split the data by parameter
+df_list <- split(df, df$parameter)
 
-df_no2_pollution <- df[df$parameter == "no2", ]
-df_o3_pollution <- df[df$parameter == "o3", ]
-df_pm25_pollution <- df[df$parameter == "pm25", ]
+# Create separate ggplots for each parameter
+plot_list <- lapply(df_list, function(data) {
+  ggplot(data, aes(x = agg_mean, fill = before_2020)) +
+    geom_density(alpha = 0.5) +
+    geom_vline(data = subset(data, !before_2020), aes(xintercept = med), color = "red", size = 1) +
+    geom_vline(data = subset(data, before_2020), aes(xintercept = med), color = "blue", size = 1) +
+    labs(
+      title = "Distribution of Air Pollution",
+      x = "Parameter",
+      y = "Density"
+    ) +
+    scale_fill_manual(values = c("red", "blue"),
+                      labels = c("2020", "3-yr avg"),
+                      guide = guide_legend(title = "Period"))
+})
 
-
+# Print the plots
+for (i in seq_along(plot_list)) {
+  print(plot_list[[i]])
+}
 
 ```
 
