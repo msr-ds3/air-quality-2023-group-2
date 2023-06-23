@@ -103,6 +103,7 @@ colnames(df_rel_change)[7] = "after_2020"
 df_rel_change <- df_rel_change %>% mutate(percent_change = (((before_2020 - after_2020)/before_2020))*100)
 
 # Plot the world map with percent_change points
+
 ggplot() +
   geom_polygon(data = world_map,
                aes(x = long, y = lat, group = group),
@@ -117,6 +118,8 @@ ggplot() +
        color = "Percent Change") +
   facet_wrap(~ parameter, scales = "free")
 ```
+
+
 
 ## Relative Change by Country
 ```{r rel-change-by-country}
